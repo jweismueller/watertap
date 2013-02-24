@@ -1,0 +1,53 @@
+<project name="waterbottle.web" default="resolve">
+
+	<path id="lib.path.id">
+		<fileset dir="lib" />
+	</path>
+
+	<target name="clean">
+		<delete dir="target" />
+		<mkdir dir="target" />
+	</target>
+
+	<target name="resolve">
+		<echo message="" />
+		<ant antfile="../watertap.api/build.xml" target="jar" inheritall="false" />
+		<copy file="../watertap.api/target/watertap.api.jar" todir="lib/compile" overwrite="true" />
+	</target>
+	
+	<target name="compile" depends="clean,resolve">
+		<mkdir dir="target/war/WEB-INF/classes" />
+		<javac destdir="target/war/WEB-INF/classes" classpathref="lib.path.id" debug="true" encoding="ISO-8859-1" includeantruntime="false">
+			<src path="src/main/java" />
+		</javac>
+	</target>
+
+	<target name="war" depends="compile">
+		<tstamp>
+			<format property="now" pattern="yyyyMMddHHmmss" />
+		</tstamp>
+		<copy todir="target/war">
+			<fileset dir="src/main/webapp" includes="**/*" />
+		</copy>
+		<copy todir="target/war/WEB-INF/lib">
+			<fileset dir="lib/compile">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<war destfile="target/waterbottle.war">
+			<fileset dir="target/war" />
+			<manifest>
+				<attribute name="Specification-Title" value="${ant.project.name}" />
+				<attribute name="Specification-Version" value="${now}" />
+				<section name="Build-Info">
+					<attribute name="Built-By" value="${user.name}" />
+				</section>
+			</manifest>
+		</war>
+	</target>
+
+	<target name="deploy" depends="war">
+		<copy file="target/waterbottle.war" todir="${JBOSS_DEPLOY}" overwrite="true" />
+	</target>
+
+</project>

@@ -1,0 +1,37 @@
+<project name="watertap.api" default="jar">
+
+	<path id="lib.path.id">
+		<fileset dir="lib" />
+	</path>
+
+	<target name="clean">
+		<delete dir="target" />
+		<mkdir dir="target" />
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="target/classes" />
+		<javac destdir="target/classes" classpathref="lib.path.id" debug="true" encoding="ISO-8859-1" includeantruntime="false">
+			<src path="src/main/java" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<tstamp>
+			<format property="now" pattern="yyyyMMddHHmmss" />
+		</tstamp>
+		<jar destfile="target/${ant.project.name}.jar">
+			<fileset dir="target/classes" />
+			<fileset dir="src/main/resources" />
+			<fileset dir="src/main/java" />
+			<manifest>
+				<attribute name="Specification-Title" value="${ant.project.name}" />
+				<attribute name="Specification-Version" value="${now}" />
+				<section name="Build-Info">
+					<attribute name="Built-By" value="${user.name}" />
+				</section>
+			</manifest>
+		</jar>
+	</target>
+
+</project>

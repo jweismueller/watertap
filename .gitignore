@@ -1,6 +1,7 @@
+bin/
+out/
+target/
 *.class
-
-# Package Files #
-*.jar
+watertap*.jar
 *.war
 *.ear
