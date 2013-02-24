@@ -3,7 +3,6 @@ package watertap.service;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import watertap.domain.b.BRef;
 import watertap.domain.b.BStart;
 
 public class TestB3 implements Test {
@@ -23,8 +22,6 @@ public class TestB3 implements Test {
 			out.append("   refLazy2:    ").append(s.refLazy2.getClass().toString());
 			out.append(" with id ").append(s.refLazy2.toString()).append(LF);
 			out.append("   refOptional: ").append(s.refOptional.getClass().toString()).append(LF);
-//			out.append("   refLazy.refEager: ").append(s.refLazy1.refEager.toString()).append(LF);
-//			out.append("   refLazy.refLazy:  ").append(s.refLazy1.refLazy.toString()).append(LF);
 		}
 		return out.toString();
 	}
