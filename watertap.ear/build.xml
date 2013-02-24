@@ -1,0 +1,47 @@
+<project name="watertap.ear" default="resolve">
+
+	<path id="lib.path.id">
+		<fileset dir="lib" />
+	</path>
+
+	<target name="clean">
+		<delete dir="target" />
+		<mkdir dir="target" />
+	</target>
+
+	<target name="resolve">
+		<echo message="" />
+		<ant antfile="../watertap.api/build.xml" target="jar" inheritall="false" />
+		<copy file="../watertap.api/target/watertap.api.jar" todir="lib/compile" overwrite="true" />
+		<ant antfile="../watertap.core/build.xml" target="jar" inheritall="false" />
+		<copy file="../watertap.core/target/watertap.core.jar" todir="lib/compile" overwrite="true" />
+	</target>
+
+	<target name="ear" depends="clean,resolve">
+		<tstamp>
+			<format property="now" pattern="yyyyMMddHHmmss" />
+		</tstamp>
+		<copy todir="target/ear">
+			<fileset dir="src/main/application" includes="**/*" />
+		</copy>
+		<copy todir="target/ear" file="lib/compile/watertap.core.jar" />
+		<copy todir="target/ear/lib">
+			<fileset dir="lib/compile/" includes="*.jar" excludes="watertap.core.jar" />
+		</copy>
+		<ear destfile="target/watertap.ear" appxml="src/main/application/META-INF/application.xml">
+			<fileset dir="target/ear" excludes="**/application.xml" />
+			<manifest>
+				<attribute name="Specification-Title" value="${ant.project.name}" />
+				<attribute name="Specification-Version" value="${now}" />
+				<section name="Build-Info">
+					<attribute name="Built-By" value="${user.name}" />
+				</section>
+			</manifest>
+		</ear>
+	</target>
+
+	<target name="deploy" depends="ear">
+		<copy file="target/watertap.ear" todir="${JBOSS_DEPLOY}" overwrite="true" />
+	</target>
+
+</project>

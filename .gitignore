@@ -3,5 +3,4 @@ out/
 target/
 *.class
 watertap*.jar
-*.war
-*.ear
+
