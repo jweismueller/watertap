@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import watertap.domain.b.BStart;
 import watertap.service.WatertapService;
 
 @Path("/")
@@ -29,10 +30,14 @@ public class WaterbottleRest {
 	}
 	
 	@GET
-	@Path("/test/{id}")
+	@Path("/load/{id}")
 	@Produces({ "text/plain" })
-	public String testLazy(@PathParam("id") String id) throws Exception {
-		return watertap.execute(id);
+	public String load(@PathParam("id") String id) throws Exception {
+		StringBuilder out = new StringBuilder();
+		BStart start = watertap.load(Long.parseLong(id));
+		out.append(start.name);
+		return out.toString();
+		 
 	}
 
 

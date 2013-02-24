@@ -1,5 +1,6 @@
 package watertap.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class BaseEntity {
+public class BaseEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private static final List<String> RANDOM_NAMES = new ArrayList<String>();
 
@@ -149,5 +152,4 @@ public class BaseEntity {
 		RANDOM_NAMES.add("Redel");
 		RANDOM_NAMES.add("Isskeld");
 	}
-
 }

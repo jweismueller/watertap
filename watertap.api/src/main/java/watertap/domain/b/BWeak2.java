@@ -17,9 +17,10 @@ import javax.persistence.TemporalType;
 
 import watertap.domain.BaseEntity;
 
-
 @Entity
 public class BWeak2 extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "WEAK")
@@ -32,9 +33,7 @@ public class BWeak2 extends BaseEntity {
 	@Column
 	@Temporal(TemporalType.DATE)
 	public Date entryDate = nextDate();
-	
+
 	@OneToMany(cascade = { CascadeType.ALL })
-	public List<BWeakWeak> weakWeaks= new ArrayList<BWeakWeak>();
-
-
+	public List<BWeakWeak> weakWeaks = new ArrayList<BWeakWeak>();
 }

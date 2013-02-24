@@ -2,26 +2,25 @@ package watertap.domain.b;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import watertap.domain.BaseEntity;
 
-
 @Entity
-public class BStrong2 extends BaseEntity {
-	
+public class BRefRef extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "STRONG2")
-	@TableGenerator(name = "STRONG2")
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "REFREF")
+	@TableGenerator(name = "REFREF")
 	public long id;
 
 	@Column
@@ -30,11 +29,4 @@ public class BStrong2 extends BaseEntity {
 	@Column
 	@Temporal(TemporalType.DATE)
 	public Date entryDate = nextDate();
-	
-	@OneToOne(cascade = { CascadeType.ALL })
-	public BStrong3 moreA = null;
-
-	@OneToOne(cascade = { CascadeType.ALL })
-	public BStrong3 moreB = null;
-
 }

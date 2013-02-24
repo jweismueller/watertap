@@ -15,21 +15,21 @@ import javax.persistence.TemporalType;
 
 import watertap.domain.BaseEntity;
 
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class AGeneric extends BaseEntity {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "GENERIC")
 	@TableGenerator(name = "GENERIC")
 	public long id;
-	
+
 	@Column
 	public String name = nextName();
-	
+
 	@Column
 	@Temporal(TemporalType.DATE)
 	public Date entryDate = nextDate();
-
 }

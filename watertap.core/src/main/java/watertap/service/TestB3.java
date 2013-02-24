@@ -3,32 +3,28 @@ package watertap.service;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import watertap.domain.b.BStrong1;
-import watertap.domain.b.BWeak1;
-import watertap.domain.b.BWeakWeak;
+import watertap.domain.b.BRef;
+import watertap.domain.b.BStart;
 
 public class TestB3 implements Test {
 
 	@Override
 	public String test(EntityManager em) throws Exception {
 		StringBuilder out = new StringBuilder();
-		TypedQuery<BStrong1> query = em.createQuery("select s from BStrong1 s", BStrong1.class);
-		// es koennen mehrere QueryHints angegeben werden
-		// query.setHint(QueryHints.FETCH, "s.weak1s.weakWeaks");
-		// mit dieser Konfiguration werden otherA und otherB im Hauptstatement mitgeladen
-		// separat nachgeladen werden otherC und otherD
-		// query.setHint(QueryHints.FETCH, "s.otherA");
-		// query.setHint(QueryHints.FETCH, "s.otherB");
-		out.append("Strong1.name; Strong1.weaks1s[n].name; Strong1.weaks1s[n].weakWeaks[m].name");
+		TypedQuery<BStart> query = em.createQuery("select s from BStart s", BStart.class);
 		out.append(LF);
-		for (BStrong1 s : query.getResultList()) {
-			for (BWeak1 weak1 : s.weak1s) {
-				for (BWeakWeak weakWeak1 : weak1.weakWeaks) {
-					out.append(s.name).append("; ");
-					out.append(weak1.name).append("; ");
-					out.append(weakWeak1.name).append(LF);
-				}
-			}
+		int i = 0;
+		for (BStart s : query.getResultList()) {
+			out.append(++i).append(") ").append(s.name).append(LF);
+			out.append("   refDefault:  ").append(s.refDefault.getClass().toString()).append(LF);
+			out.append("   refEager:    ").append(s.refEager.getClass().toString()).append(LF);
+			out.append("   refLazy1:    ").append(s.refLazy1.getClass().toString());
+			out.append(" with id ").append(s.refLazy1.toString()).append(LF);
+			out.append("   refLazy2:    ").append(s.refLazy2.getClass().toString());
+			out.append(" with id ").append(s.refLazy2.toString()).append(LF);
+			out.append("   refOptional: ").append(s.refOptional.getClass().toString()).append(LF);
+//			out.append("   refLazy.refEager: ").append(s.refLazy1.refEager.toString()).append(LF);
+//			out.append("   refLazy.refLazy:  ").append(s.refLazy1.refLazy.toString()).append(LF);
 		}
 		return out.toString();
 	}

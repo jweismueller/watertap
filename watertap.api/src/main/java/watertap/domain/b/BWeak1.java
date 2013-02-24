@@ -19,9 +19,10 @@ import javax.persistence.TemporalType;
 
 import watertap.domain.BaseEntity;
 
-
 @Entity
 public class BWeak1 extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "WEAK")
@@ -36,7 +37,6 @@ public class BWeak1 extends BaseEntity {
 	public Date entryDate = nextDate();
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "BWEAK1_WEAKWEAK_RELATION", joinColumns = { @JoinColumn(name = "WEAK1_ID") }, inverseJoinColumns = { @JoinColumn(name = "WEAKWEAK_ID") } )
+	@JoinTable(name = "BWEAK1_REL_TO_WEAKWEAK", joinColumns = { @JoinColumn(name = "WEAK1_ID") }, inverseJoinColumns = { @JoinColumn(name = "WEAKWEAK_ID") })
 	public List<BWeakWeak> weakWeaks = new ArrayList<BWeakWeak>();
-
 }
