@@ -1,4 +1,6 @@
 <project name="watertap.ear" default="resolve">
+	
+	<property environment="env" />
 
 	<path id="lib.path.id">
 		<fileset dir="lib" />
@@ -41,7 +43,7 @@
 	</target>
 
 	<target name="deploy" depends="ear">
-		<copy file="target/watertap.ear" todir="${JBOSS_DEPLOY}" overwrite="true" />
+		<copy file="target/watertap.ear" todir="${env.JBOSS_DEPLOY}" overwrite="true" />
 	</target>
 
 </project>
